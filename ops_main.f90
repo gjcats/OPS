@@ -73,7 +73,9 @@ USE m_fileutils
 USE m_error
 USE m_commonconst
 USE m_commonfile
+#ifndef GNU
 USE IFPORT
+#endif
 
 IMPLICIT NONE
 
@@ -501,10 +503,13 @@ CALL ops_rcp_char_all(icm, isec, xm, ym, f_z0user, z0_user, z0nlgrid, z0eurgrid,
 !
 CALL alloc(nrrcp, precip, error)
 IF (error%haserror) GOTO 3300 ! GOTO deallocate all arrays and do error handling at end of program.
+
+#ifndef GNU
 !
 ! Clear screen 
 !
-result = SYSTEM("clear")
+  result = SYSTEM("clear")	!
+#endif
 !
 ! Open the progress file and write 0.0 progression to screen.
 ! Numbs (= # characters to backspace for screen progress indicator) is 11 for this first progress call.

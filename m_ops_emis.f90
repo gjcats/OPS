@@ -800,6 +800,8 @@ TYPE (TError), INTENT(INOUT)                     :: error                      !
 
 ! Local:
 real :: wlratio ! ratio width/length building
+logical :: ierr ! error condition
+logical :: ops_openlog
 
 ! Check only needed if all building dimensions have been specified:
 if (.not. (is_missing(building%length) .or. is_missing(building%width) .or. is_missing(building%height) .or. is_missing(building%orientation))) then
@@ -817,7 +819,7 @@ if (.not. (is_missing(building%length) .or. is_missing(building%width) .or. is_m
    ! Note that it is already checked that all building dimensions (length, width, height) have been specified
 
    ! Open log file if not already open:
-   call ops_openlog(error)
+   ierr = ops_openlog(error)
    if (error%haserror) goto 9999
 
    ! Error if Qw must be specified (= 0) and cannot be missing:
