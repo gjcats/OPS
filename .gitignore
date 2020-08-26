@@ -1,1 +1,8 @@
 RCS
+*.o
+*.mod
+*.exe
+*.out
+dependencies
+example1.*
+example2.*
