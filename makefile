@@ -38,7 +38,15 @@ ifeq ($(MAKECONF),GNU_Linux)
    SOURCES := $(SOURCES) inum.f90		# no IFPORT library
    FC       = gfortran
    CPPFLAGS = -DUNIX -DGNU
-   FFLAGS   = $(OPT) -ffree-line-length-0 -cpp
+   FFLAGSb  = $(OPT) -ffree-line-length-0 -finit-local-zero -cpp
+   ifeq ($(MAKECMDGOALS),OPS8)
+      FFLAGSb += -fdefault-real-8
+   endif
+   FFLAGS   = $(FFLAGSb)
+
+# optimisation problems
+   ops_statparexp.o : FFLAGS = $(FFLAGSb:O3=O0)
+
    LDLIBS   = -lMATH77
    LDFLAGS  = -L /usr/local/lib
 else
